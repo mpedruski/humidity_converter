@@ -1,24 +1,27 @@
 import math
 
-molar_mass_water = 18.01528
-ideal_gas_constant = 8313.6 ### Assumes mass reported in kg, while molar mass in g
-
-### Calculate saturation vapour pressure of moist air for given conditions
-
 def saturation(pressure, temperature):
+    ''' (float, int) -> float
+    Calculates the staturation vapour pressure of moist air for given conditions
+    '''
     sat = (1.0016 + 3.15*pressure*10**-6 - 0.074/pressure) * 6.112 * math.exp(17.62*temperature/(243.12+temperature))
     return sat
 
-### Calculate mass of water in a given volume of air
-
 def mass(RH, pressure, temperature):
+    ''' (int, float, int) -> float
+    Returns the mass of water in a given volume of air under parameters supplied'''
     mw = RH*saturation(pressure,temperature)*molar_mass_water/(ideal_gas_constant*(temperature+273.15))
     return mw
 
-### Calculate the relative humidity based on a given mass of water
 def rel_humid(mass, pressure, temperature):
+    '''(float, float, int) -> float
+    Returns the relative humidity of air based on mass of water in the air, the air pressure
+    and the air temperature'''
     RH = mass*ideal_gas_constant*(temperature+273.15)/(saturation(pressure, temperature)*molar_mass_water)
     return RH
+
+molar_mass_water = 18.01528
+ideal_gas_constant = 8.3136
 
 ### Get input from user on outdoor conditions
 
